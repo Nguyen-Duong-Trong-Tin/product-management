@@ -1,0 +1,29 @@
+extends ../../layouts/default
+
+include ../../mixins/boxTitle
+include ../../mixins/formatCurrency
+
+block main
+  +boxTitle(pageTitle)
+  
+  .row
+    each product in products
+      .col-3
+        .card.product-item
+          img(
+            class="card-img-top"
+            src=product.thumbnail
+          )
+          if (product.featured)
+            .featured Nổi bật
+          .card-body
+            h5.card-title #{product.title}
+            .card-text.price-new
+              +formatCurrency(product.price - ((product.price * product.discountPercentage) / 100))
+            .card-text.price-old
+              +formatCurrency(product.price)
+            p.card-text.discount-percentage - #{product.discountPercentage}%
+            a(
+              class="btn btn-primary"
+              href=`/products/detail/${product.slug}`
+            ) Chi tiết

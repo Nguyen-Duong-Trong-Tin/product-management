@@ -1,0 +1,11 @@
+extends ../../layouts/admin
+
+include ../../mixins/boxTitle
+include ../../mixins/boxCreate
+
+block main
+  +boxTitle(pageTitle)
+
+  +boxCreate(`/${admin}/accounts/create`)
+
+  

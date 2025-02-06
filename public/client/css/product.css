@@ -1,0 +1,43 @@
+/* Product Item */
+.product-item {
+  position: relative;
+  margin-bottom: 30px;
+}
+
+.product-item img {
+  margin-top: 60px;
+}
+
+.product-item .featured {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  background-color: green;
+  color: #ffffff;
+  border-radius: 10px;
+  padding: 10px 20px;
+  text-align: center;
+  font-weight: bold;
+  width: 60%;
+  opacity: 0.6;
+}
+
+.product-item .price-new {
+  color: green;
+  font-weight: bold;
+}
+
+.product-item .price-old {
+  color: red;
+  font-weight: bold;
+  text-decoration: line-through;
+}
+
+.product-item .discount-percentage {
+  background-color: orange;
+  color: #ffffff;
+  border-radius: 10px;
+  text-align: center;
+  width: 30%;
+}
+/* End Product Item */
