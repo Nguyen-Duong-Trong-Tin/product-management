@@ -14,6 +14,9 @@ app.use(cookieParser("ABCXYZ"));
 app.use(session({ cookie: { maxAge: 60000 } }));
 app.use(flash());
 
+const moment = require("moment");
+(global as any).moment = moment;
+
 const bodyParser = require("body-parser");
 app.use(bodyParser.urlencoded({ extended: false }));
 

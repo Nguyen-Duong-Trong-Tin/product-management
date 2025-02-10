@@ -2,6 +2,8 @@ import { Response } from "express";
 
 import configs from "../../configs/index.config";
 
+import { EAccountStatus } from "../../enums/account.enum";
+
 import roleService from "../../services/admin/role.service";
 import accountService from "../../services/admin/account.service";
 
@@ -22,7 +24,7 @@ const get = (req: any, res: Response): void => {
 // [GET] /admin/accounts
 const create = async (req: any, res: Response): Promise<void> => {
   try {
-    const roles = await roleService.find();
+    const roles = await roleService.find(req);
     return res.render("admin/pages/accounts/create", {
       pageTitle: "Tạo Mới Tài Khoản",
       roles
@@ -36,14 +38,19 @@ const create = async (req: any, res: Response): Promise<void> => {
 // [POST] /admin/accounts
 const createPost = async (req: any, res: Response): Promise<void> => {
   try {
-    const fullName = req.body.fullName;
-    const email = req.body.email;
-    const password = md5Util.encode(req.body.password);
-    const phone = req.body.phone;
-    const avatar = req.file.path;
-    const status = req.body.status;
-    const roleId = req.body.roleId;
-    
+    const myAccount: {
+      accountId: string,
+      roleId: string
+    } = req.account;
+
+    const fullName: string = req.body.fullName;
+    const email: string = req.body.email;
+    const password: string = md5Util.encode(req.body.password);
+    const phone: string = req.body.phone;
+    const avatar: string = req.file.path;
+    const status: string = req.body.status;
+    const roleId: string = req.body.roleId;
+
     const roleExists = await roleService.findById(roleId);
     if (!roleExists) {
       req.flash("error", "Vai trò không được tìm thấy!");
@@ -56,10 +63,10 @@ const createPost = async (req: any, res: Response): Promise<void> => {
       password,
       phone,
       avatar,
-      status,
+      status: status as EAccountStatus,
       roleId,
       createdBy: {
-        accountId: "ABCXYZ",
+        accountId: myAccount.accountId,
         createdAt: new Date()
       },
       deleted: false

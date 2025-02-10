@@ -9,7 +9,7 @@ interface IRole {
   updatedBy: {
     accountId: string;
     updatedAt: Date;
-  },
+  }[],
   deleted: boolean;
   deletedBy: {
     accountId: string;
