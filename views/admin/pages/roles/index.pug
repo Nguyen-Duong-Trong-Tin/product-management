@@ -4,6 +4,7 @@ include ../../mixins/boxTitle
 include ../../mixins/boxCreate
 include ../../mixins/formSort
 include ../../mixins/formSearch
+include ../../mixins/formAction
 include ../../mixins/pagination
 
 block main
@@ -13,22 +14,9 @@ block main
 
   +formSort(sort)
 
-  +formSearch(keyword)
+  +formSearch(keyword, "Tìm kiếm theo tên...")
 
-  form(
-    method="POST"
-    action=`${url.base}/actions?_method=PATCH`
-    form-action
-  )
-    label.form-label Hành động
-    .input-group.mb-3
-      select(
-        class="form-select"
-        name="action"
-      )
-        option(value="") ---
-        option(value="delete") Xóa
-      button.btn.btn-primary Thực hiện
+  +formAction(`${url.base}/actions?_method=PATCH`, actionOptions)
 
   table.table
     thead

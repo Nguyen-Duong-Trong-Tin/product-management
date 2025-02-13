@@ -1,4 +1,4 @@
-mixin formSearch(keyword)
+mixin formSearch(keyword, placeholder)
   form(form-search)
     label.form-label Tìm kiếm
     .input-group.mb-3
@@ -6,6 +6,6 @@ mixin formSearch(keyword)
         class="form-control"
         name="keyword"
         value=keyword
-        placeholder="Tìm kiếm theo tên..."
+        placeholder=placeholder
       )
       button.btn.btn-primary Tìm kiếm

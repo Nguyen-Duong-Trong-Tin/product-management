@@ -4,7 +4,7 @@ import productService from "../../services/client/product.service";
 
 const get = async (req: any, res: Response): Promise<void> => {
   try {
-    const products = await productService.find();
+    const products = await productService.find(req);
     return res.render("client/pages/products", {
       pageTitle: "Danh Sách Sản Phẩm",
       products

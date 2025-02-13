@@ -2,12 +2,12 @@ import { Response } from "express";
 
 import configs from "../../configs/index.config";
 
-import roleService from "../../services/admin/role.service";
-import IAccount from "../../interfaces/account.interface";
-import accountService from "../../services/admin/account.service";
 import getUrlHelper from "../../helpers/getUrl.helper";
 
-// [GET] /admin/roles?page=:page&limit=:limit&keyword=:keyword
+import roleService from "../../services/admin/role.service";
+import accountService from "../../services/admin/account.service";
+
+// [GET] /admin/roles?page=:page&limit=:limit&keyword=:keyword&sort=title-asc
 const get = async (req: any, res: Response): Promise<void> => {
   try {
     const sort: string = req.query.sort;
@@ -22,6 +22,14 @@ const get = async (req: any, res: Response): Promise<void> => {
 
     const keyword: string = req.query.keyword;
 
+    const actionOptions: {
+      value: string,
+      title: string
+    }[] = [
+        { value: "", title: "---" },
+        { value: "delete", title: "Xóa" }
+      ];
+
     const page: number = parseInt(req.query.page as string) || 1;
     const limit: number = parseInt(req.query.limit as string) || 10;
 
@@ -32,13 +40,14 @@ const get = async (req: any, res: Response): Promise<void> => {
 
     return res.render("admin/pages/roles", {
       pageTitle: "Danh Sách Vai Trò",
-      roles,
       url: getUrlHelper(req),
+      roles,
       sort: {
         sort,
         sortOptions
       },
       keyword,
+      actionOptions,
       pagination: {
         page,
         limit,
@@ -62,16 +71,19 @@ const getById = async (req: any, res: Response): Promise<void> => {
       return res.redirect("back");
     }
 
-    const [createdBy, updatedBy] = await Promise.all([
-      {
-        account: await accountService.findById(roleExists.createdBy.accountId as string) as unknown as IAccount,
+    const [
+      createdBy,
+      updatedBy
+    ] = await Promise.all([
+      accountService.findById(roleExists.createdBy.accountId as string).then(account => ({
+        account,
         createdAt: roleExists.createdBy.createdAt as Date
-      },
+      })),
 
-      Promise.all(roleExists.updatedBy.map(async (item) => ({
-        account: await accountService.findById(item.accountId as string) as unknown as IAccount,
+      Promise.all(roleExists.updatedBy.map(item => accountService.findById(item.accountId as string).then(account => ({
+        account,
         updatedAt: item.updatedAt as Date
-      })))
+      }))))
     ]);
 
     return res.render("admin/pages/roles/detail", {

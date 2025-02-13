@@ -12,6 +12,7 @@ html
 
     link(rel="stylesheet" href="/css/root.css")
     link(rel="stylesheet" href="/css/index.css")
+    link(rel="stylesheet", href="/admin/css/index.css")
 
     script(
       src=`https://cdn.tiny.cloud/1/${process.env.TINYMCE_API_KEY}/tinymce/7/tinymce.min.js`
@@ -46,7 +47,9 @@ html
     script(src="/js/buttonGoBack.js")
     script(src="/js/flash.js")
     script(type="module" src="/js/formAction.js") 
-    script(src="/js/formDeleteItem.js") 
+    script(src="/js/formDeleteItem.js")
+    script(type="module" src="/js/formFilter.js")  
     script(type="module" src="/js/formSearch.js")  
-    script(type="module" src="/js/formSort.js")  
+    script(type="module" src="/js/formSort.js")
+    script(type="module" src="/js/formUpdateStatus.js")
     script(src="/js/tinymce.js")

@@ -2,7 +2,7 @@ import { NextFunction, Response } from "express";
 
 import configs from "../../configs/index.config";
 
-const admin = (req: any, res: Response, next: NextFunction): void => {
+const variable = (req: any, res: Response, next: NextFunction): void => {
   try {
     res.locals.admin = configs.admin;
     return next();
@@ -12,4 +12,17 @@ const admin = (req: any, res: Response, next: NextFunction): void => {
   }
 }
 
-export default admin;
+const redirect = (req: any, res: Response): void => {
+  try {
+    return res.redirect(`/${configs.admin}/auth/login`);
+  } catch {
+    req.flash("error", "Có lỗi xảy ra!");
+    return res.redirect("back");
+  }
+}
+
+const adminMiddleware = {
+  variable,
+  redirect
+};
+export default adminMiddleware;

@@ -1,10 +1,17 @@
 import { Request } from "express";
+import { SortOrder } from "mongoose";
+
+import paginationHelper from "../../helpers/pagination.helper";
+import sortHelper from "../../helpers/sort.helper";
 
 import IRole from "../../interfaces/role.interface";
+
 import RoleModel from "../../models/role.model";
-import paginationHelper from "../../helpers/pagination.helper";
-import { SortOrder } from "mongoose";
-import sortHelper from "../../helpers/sort.helper";
+
+const findAll = async () => {
+  const roles = await RoleModel.find({ deleted: false });
+  return roles;
+}
 
 const find = async (req: Request) => {
   const pagination: {
@@ -84,11 +91,15 @@ const del = async (
   }, {
     deleted: true,
     deletedBy
+  }, {
+    new: true,
+    runValidators: true
   });
   return newRole;
 }
 
 const roleService = {
+  findAll,
   find,
   findById,
   calculateMaxPage,

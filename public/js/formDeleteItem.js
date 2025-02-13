@@ -4,7 +4,7 @@ if (formsDeleteItem) {
     form.addEventListener("submit", (e) => {
       e.preventDefault();
       
-      if (confirm("Bạn có chắc muốn xóa?")) {
+      if (window.confirm("Bạn có chắc muốn xóa?")) {
         form.submit();
       }
     });

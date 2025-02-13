@@ -41,7 +41,7 @@ const AccountSchema = new mongoose.Schema({
   updatedBy: {
     type: [{
       accountId: String,
-      createdAt: Date
+      updatedAt: Date
     }]
   },
   deleted: {

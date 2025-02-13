@@ -40,7 +40,7 @@ const loginPost = async (req: any, res: Response): Promise<void> => {
       maxAge: 1000 * 60 * 60 * 24
     });
 
-    return res.redirect(`/${configs.admin}/roles`);
+    return res.redirect(`/${configs.admin}/dashboard`);
   } catch {
     req.flash("error", "Có lỗi xảy ra!");
     return res.redirect("back");

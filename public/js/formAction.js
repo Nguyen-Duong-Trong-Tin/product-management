@@ -28,28 +28,32 @@ if (formAction) {
     e.preventDefault();
     const value = e.target.elements.action.value;
 
+    const checkboxs = document.querySelectorAll("input[name=checkbox]:checked");
+    if (!checkboxs.length) {
+      return;
+    }
 
     switch (value) {
       case "delete": {
-        const checkboxs = document.querySelectorAll("input[name=checkbox]:checked");
-        if (!checkboxs.length) {
+        if (!window.confirm("Bạn có chắc muốn xóa?")) {
           return;
         }
 
-        if (!confirm("Bạn có chắc muốn xóa?")) {
-          return;
-        }
-
-        const inputHidden = createInputHidden(checkboxs);
-        formAction.append(inputHidden);
-
-        formAction.submit();
         break;
       }
 
+      case "active": { break; }
+      
+      case "inactive": { break; }
+
       default: {
-        console.log("NO");
+        return;
       }
     }
+
+    const inputHidden = createInputHidden(checkboxs);
+    formAction.append(inputHidden);
+
+    formAction.submit();
   });
 }

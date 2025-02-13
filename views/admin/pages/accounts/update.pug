@@ -10,7 +10,7 @@ block main
 
   form(
     method="POST"
-    action=`/${admin}/accounts/create`
+    action=`/${admin}/accounts/update/${account.id}?_method=PATCH`
     enctype="multipart/form-data"
   )
     .mb-3
@@ -18,6 +18,7 @@ block main
       input(
         class="form-control"
         name="fullName"
+        value=account.fullName
         required
       )
     .mb-3
@@ -26,14 +27,7 @@ block main
         class="form-control"
         type="email"
         name="email"
-        required
-      )
-    .mb-3
-      label.form-label Password
-      input(
-        class="form-control"
-        type="password"
-        name="password"
+        value=account.email
         required
       )
     .mb-3
@@ -41,15 +35,21 @@ block main
       input(
         class="form-control"
         name="phone"
+        value=account.phone
         required
       )
     .mb-3
       label.form-label Ảnh
+      .w-25.mb-1
+        img(
+          class="img-thumbnail"
+          src=account.avatar
+        )
       input(
         class="form-control"
         type="file"
         name="avatar"
-        required
+        value=account.avatar
       )
     .mb-3
       label.form-label Trạng thái
@@ -58,8 +58,8 @@ block main
         name="status"
         required
       )
-        option(value="active") Hoạt động
-        option(value="inactive") Ngưng hoạt động
+        option(value="active" selected=(account.status === "active")) Hoạt động
+        option(value="inactive" selected=(account.status === "inactive")) Ngưng hoạt động
     .mb-3
       label.form-label Vai trò
       select(
@@ -68,7 +68,7 @@ block main
         required
       )
         each role in roles
-          option(value=role.id) #{role.title}
+          option(value=role.id selected=(account.roleId = role.id)) #{role.title}
     
     .d-flex.justify-content-center.mb-3
-      button.btn.btn-primary Thêm
+      button.btn.btn-primary Cập nhật
